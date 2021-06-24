@@ -32,3 +32,4 @@ server.sendmail(Sender_Email, Receiver_Email, Message)
 
 # ending the session 
 server.quit()
+print("Mail Sent")
