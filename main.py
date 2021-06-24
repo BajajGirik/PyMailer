@@ -16,14 +16,14 @@ Emailregex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
 # taking mailing details from user
 print("Enter Mail details:")
-Receiver_Email = input("TO: ") or 'bajajgirik2010@gmail.com'
-Subject = input("SUBJECT: ") or 'Test Mail'
-Body = input("BODY: ") or 'Hello World!'
+Receiver_Email = input("TO: ")
+Subject = input("SUBJECT: ")
+Body = input("BODY: ")
 Message = f'Subject: {Subject}\n\n{Body}'
 
 if re.search(Emailregex, Receiver_Email):
     try:
-        # setting up server at port: 8000
+        # setting up server at port: 25
         server = smtplib.SMTP('smtp.gmail.com', PORT)
 
         server.ehlo()
