@@ -18,18 +18,24 @@ Subject = input("SUBJECT: ")
 Body = input("BODY: ")
 Message = f'Subject: {Subject}\n\n{Body}'
 
-# setting up server at port: 8000
-server = smtplib.SMTP('smtp.gmail.com', PORT)
+try:
+    # setting up server at port: 8000
+    server = smtplib.SMTP('smtp.gmail.com', PORT)
 
-server.ehlo()
-# connection in "Transport Layer Security" mode
-server.starttls()
-server.ehlo()
+    server.ehlo()
+    # connection in "Transport Layer Security" mode
+    server.starttls()
+    server.ehlo()
 
-# Login with the account you want to send mail from and send the msg
-server.login(Sender_Email, Password)
-server.sendmail(Sender_Email, Receiver_Email, Message)
+    # Login with the account you want to send mail from and send the msg
+    server.login(Sender_Email, Password)
+    server.sendmail(Sender_Email, Receiver_Email, Message)
 
-# ending the session 
-server.quit()
-print("Mail Sent")
+    # ending the session 
+    print("Mail Sent")
+
+except: 
+    print("Unsuccessful")
+
+finally:
+    server.quit()    
