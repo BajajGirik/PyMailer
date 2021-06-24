@@ -1,7 +1,7 @@
-from email.message import Message
 import smtplib
 import os
 from dotenv import load_dotenv
+import re
 
 # loads environment variables from .env file
 load_dotenv()
@@ -11,31 +11,38 @@ Password = os.getenv('EMAIL_PASSWORD')
 
 PORT = 25
 
+# for validating an email that user enters 
+Emailregex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
+
 # taking mailing details from user
 print("Enter Mail details:")
-Receiver_Email = input("TO: ")
-Subject = input("SUBJECT: ")
-Body = input("BODY: ")
+Receiver_Email = input("TO: ") or 'bajajgirik2010@gmail.com'
+Subject = input("SUBJECT: ") or 'Test Mail'
+Body = input("BODY: ") or 'Hello World!'
 Message = f'Subject: {Subject}\n\n{Body}'
 
-try:
-    # setting up server at port: 8000
-    server = smtplib.SMTP('smtp.gmail.com', PORT)
+if re.search(Emailregex, Receiver_Email):
+    try:
+        # setting up server at port: 8000
+        server = smtplib.SMTP('smtp.gmail.com', PORT)
 
-    server.ehlo()
-    # connection in "Transport Layer Security" mode
-    server.starttls()
-    server.ehlo()
+        server.ehlo()
+        # connection in "Transport Layer Security" mode
+        server.starttls()
+        server.ehlo()
 
-    # Login with the account you want to send mail from and send the msg
-    server.login(Sender_Email, Password)
-    server.sendmail(Sender_Email, Receiver_Email, Message)
+        # Login with the account you want to send mail from and send the msg
+        server.login(Sender_Email, Password)
+        server.sendmail(Sender_Email, Receiver_Email, Message)
 
-    # ending the session 
-    print("Mail Sent")
+        # ending the session 
+        print("Mail Sent")
 
-except: 
-    print("Unsuccessful")
+    except: 
+        print("Unsuccessful")
 
-finally:
-    server.quit()    
+    finally:
+        server.quit()
+
+else:
+    print("Please enter a valid email")       
