@@ -20,6 +20,7 @@ print("Enter Mail details:")
 Receiver_Email = input("TO: ")
 Subject = input("SUBJECT: ")
 Body = input("BODY: ")
+Receiver_Email = Receiver_Email.lower()
 
 if re.search(Emailregex, Receiver_Email):
     try:
