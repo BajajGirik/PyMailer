@@ -2,6 +2,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 import re
+from email.message import EmailMessage
 
 # loads environment variables from .env file
 load_dotenv()
@@ -19,7 +20,6 @@ print("Enter Mail details:")
 Receiver_Email = input("TO: ")
 Subject = input("SUBJECT: ")
 Body = input("BODY: ")
-Message = f'Subject: {Subject}\n\n{Body}'
 
 if re.search(Emailregex, Receiver_Email):
     try:
@@ -33,15 +33,25 @@ if re.search(Emailregex, Receiver_Email):
 
         # Login with the account you want to send mail from and send the msg
         server.login(Sender_Email, Password)
-        server.sendmail(Sender_Email, Receiver_Email, Message)
 
-        # ending the session 
+        # creating msg to be sent 
+        msg = EmailMessage()
+
+        msg['Subject'] = Subject
+        msg['From'] = Sender_Email
+        msg['To'] = Receiver_Email
+        msg.set_content(Body)
+      
+        # sending the message on gmail 
+        server.send_message(msg)
+
         print("Mail Sent")
 
     except: 
         print("Unsuccessful")
 
     finally:
+        # ending the session 
         server.quit()
 
 else:
