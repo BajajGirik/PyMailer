@@ -10,7 +10,7 @@ def checkEmail(Receiver_email):
     return False
 
 # function to find file paths 
-def find_files(filename, startPath = os.path.abspath(os.sep)):
+def findFiles(filename, startPath = os.path.abspath(os.sep)):
    res = []
 
    # walking top-down from the startPath  
@@ -22,7 +22,10 @@ def find_files(filename, startPath = os.path.abspath(os.sep)):
          res.append(os.path.join(root, filename))
 
    index = selectFiles(res)
-   return res[index-1]
+   if index < 0:
+       return False
+
+   return res[index]
 
 def selectFiles(res):
     length = len(res)
@@ -43,5 +46,42 @@ def selectFiles(res):
 
     if flag == 1:
         flag = int(input("Enter the file number you want to select"))
+        flag -= 1
 
     return flag
+
+
+def readFile(file):
+    arr = []
+    f = open(file, 'rb')
+    arr.append(f.read())
+    arr.append(fileSubType(f.name))
+    arr.append(f.name)
+    # arr.append(fileMainType(f_subtype))
+    return arr
+    
+def fileSubType(name):
+    i = -1
+    s=''
+    while name[i] != '.':
+        s += name[i]
+        i -= 1
+
+    s.lower()
+    return s[::-1]
+
+# def fileMainType(subtype):
+#     txt = ['txt','html']
+#     img = ['jpeg','jpg','png']
+#     vid = ['mp4','mkv']
+
+#     if subtype in img:
+#         return 'image'
+
+#     if subtype in vid:
+#         return'video' 
+
+#     if subtype in txt:
+#         return 'text'
+
+#     return 'application'    
