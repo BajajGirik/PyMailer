@@ -1,28 +1,25 @@
 import smtplib
 import os
 from dotenv import load_dotenv
-import re
 from email.message import EmailMessage
+import utils
 
 # loads environment variables from .env file
 load_dotenv()
 
 Sender_Email = os.getenv('EMAIL_ADDRESS')
 Password = os.getenv('EMAIL_PASSWORD')
-
 PORT = 25
-
-# for validating an email that user enters 
-Emailregex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
 
 # taking mailing details from user
 print("Enter Mail details:")
 Receiver_Email = input("TO: ")
 Subject = input("SUBJECT: ")
 Body = input("BODY: ")
-Receiver_Email = Receiver_Email.lower()
+print("Enter the file name you want to attach in mail")
+Attachment = input("(Press Enter to skip): ")
 
-if re.search(Emailregex, Receiver_Email):
+if utils.checkEmail(Receiver_Email):
     try:
         # setting up server at port: 25
         server = smtplib.SMTP('smtp.gmail.com', PORT)
