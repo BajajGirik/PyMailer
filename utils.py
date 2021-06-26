@@ -21,4 +21,27 @@ def find_files(filename, startPath = os.path.abspath(os.sep)):
       if filename in files:
          res.append(os.path.join(root, filename))
 
-   return res
+   index = selectFiles(res)
+   return res[index-1]
+
+def selectFiles(res):
+    length = len(res)
+    flag = 0
+
+    if length == 0:
+        print("No file found")
+        flag = -1
+
+    elif length == 1:
+        print("File Found")
+    else:
+        print("Multiple Files found")
+        flag = 1
+
+    for i in range(1,length+1):
+        print(f"{i}) {res[i-1]}")
+
+    if flag == 1:
+        flag = int(input("Enter the file number you want to select"))
+
+    return flag
