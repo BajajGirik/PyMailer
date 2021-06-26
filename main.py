@@ -32,6 +32,9 @@ if utils.checkEmail(Receiver_Email):
         # Login with the account you want to send mail from and send the msg
         server.login(Sender_Email, Password)
 
+        # searching for attachment
+        file = utils.findFiles(Attachment)
+        
         # creating msg to be sent 
         msg = EmailMessage()
 
@@ -39,7 +42,11 @@ if utils.checkEmail(Receiver_Email):
         msg['From'] = Sender_Email
         msg['To'] = Receiver_Email
         msg.set_content(Body)
-      
+
+        if file:
+            msg.add_attachment(file[0], maintype=file[1], subtype=file[2], filename=Attachment)
+            print("Added attachment")
+
         # sending the message on gmail 
         server.send_message(msg)
 
